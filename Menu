@@ -1,0 +1,86 @@
+-- Tạo ScreenGui
+local player = game.Players.LocalPlayer
+local gui = Instance.new("ScreenGui")
+gui.Name = "CustomMenu"
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- Frame chính
+local Main = Instance.new("Frame")
+Main.Parent = gui
+Main.Size = UDim2.new(0, 400, 0, 250)
+Main.Position = UDim2.new(0.5, -200, 0.5, -125)
+Main.BackgroundColor3 = Color3.fromRGB(30,30,30)
+Main.BorderSizePixel = 0
+
+-- Tab buttons
+local Tabs = Instance.new("Frame", Main)
+Tabs.Size = UDim2.new(0, 120, 1, 0)
+Tabs.BackgroundColor3 = Color3.fromRGB(20,20,20)
+Tabs.BorderSizePixel = 0
+
+-- Content
+local Content = Instance.new("Frame", Main)
+Content.Position = UDim2.new(0, 120, 0, 0)
+Content.Size = UDim2.new(1, -120, 1, 0)
+Content.BackgroundColor3 = Color3.fromRGB(40,40,40)
+Content.BorderSizePixel = 0
+
+-- Hàm tạo tab
+local function createTab(name, y)
+    local btn = Instance.new("TextButton", Tabs)
+    btn.Size = UDim2.new(1, 0, 0, 40)
+    btn.Position = UDim2.new(0, 0, 0, y)
+    btn.Text = name
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.BackgroundColor3 = Color3.fromRGB(50,50,50)
+    btn.BorderSizePixel = 0
+
+    local page = Instance.new("Frame", Content)
+    page.Size = UDim2.new(1,0,1,0)
+    page.Visible = false
+    page.BackgroundTransparency = 1
+
+    btn.MouseButton1Click:Connect(function()
+        for _,v in pairs(Content:GetChildren()) do
+            v.Visible = false
+        end
+        page.Visible = true
+    end)
+
+    return page
+end
+
+-- Tab 1
+local Tab1 = createTab("Main", 0)
+Tab1.Visible = true
+
+local btn1 = Instance.new("TextButton", Tab1)
+btn1.Size = UDim2.new(0,200,0,40)
+btn1.Position = UDim2.new(0,20,0,20)
+btn1.Text = "Hello"
+btn1.MouseButton1Click:Connect(function()
+    print("Hello từ Tab Main")
+end)
+
+-- Tab 2
+local Tab2 = createTab("Player", 40)
+
+local speedBtn = Instance.new("TextButton", Tab2)
+speedBtn.Size = UDim2.new(0,200,0,40)
+speedBtn.Position = UDim2.new(0,20,0,20)
+speedBtn.Text = "Speed x2"
+speedBtn.MouseButton1Click:Connect(function()
+    player.Character.Humanoid.WalkSpeed = 32
+end)
+
+-- Tab 3
+local Tab3 = createTab("Extra", 80)
+
+local testBtn = Instance.new("TextButton", Tab3)
+testBtn.Size = UDim2.new(0,200,0,40)
+testBtn.Position = UDim2.new(0,20,0,20)
+testBtn.Text = "Test"
+testBtn.MouseButton1Click:Connect(function()
+    print("Tab 3 hoạt động")
+end)
+
